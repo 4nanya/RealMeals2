@@ -1,6 +1,6 @@
 import { SafeAreaViewComponent } from "react-native";
 
-const API_KEY = "AIzaSyCzi7o-SZiNQ_KlhGlI5eJlLQ5m9fVB1OA";
+const API_KEY = "add-key";
 const API_URL = `https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`;
 
 function generateBody(image) {
