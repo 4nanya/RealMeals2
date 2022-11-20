@@ -1,7 +1,7 @@
 function findFoodArray(scan) {
 
     //const scan = new Array("Naan", "Cereal", "Kale", "Meat") ; // what the image has from google api
-   // console.log("scan -->", scan);
+    console.log("ENTERING findFoodArray.js");
     
     // list of foods in the different food groups
     const veg = new Array("Vegetable", "Kale", "Leaf vegetable", "Food");
@@ -22,18 +22,18 @@ function findFoodArray(scan) {
     const present = new Array(false, false, false, false, false) ;
     //words corrosponds to the below words
     const words = new Array("Vegetable", "Protein", "Fruit", "Grain", "Dairy") ;
-    const presentArray = new Array();
-    const missingArray = new Array();
+    const presentArray = [];
+    const missingArray = [];
     
     // nested for loop that goes through the scanned list and checks those against our local database
     for (let i = 0; i < scanLen; i++) {
       let scanner = scan[i]; //take individual index from scan area
-      console.log(scanLen, scanner) ;
+      //console.log(scanLen, scanner) ;
       for (let w = 0; w < vegLen; w++) {
         let check = veg[w];
         var checker = scanner.localeCompare(check); //check if the one in the local list is equal to the list gotten from Google API
         if (checker == 0 ){
-         console.log("vegtable") ;
+         //console.log("vegtable") ;
          present[0] = true; //if the food group is present, replace that group's space with true
         
       }
@@ -41,7 +41,7 @@ function findFoodArray(scan) {
         let check = protein[w];
         var checker = scanner.localeCompare(check);
         if (checker == 0 ){
-         console.log("protein") ;
+         //console.log("protein") ;
          present[1] = true;
       }
       }
@@ -49,7 +49,7 @@ function findFoodArray(scan) {
         let check = fruit[w];
         var checker = scanner.localeCompare(check);
         if (checker == 0 ){
-         console.log("fruit") ;
+         //console.log("fruit") ;
          present[2] = true; 
       }
       }
@@ -57,7 +57,7 @@ function findFoodArray(scan) {
         let check = grain[w];
         var checker = scanner.localeCompare(check);
         if (checker == 0 ){
-         console.log("grain") ;
+         //console.log("grain") ;
          present[3] = true;
       }
       }
@@ -65,8 +65,8 @@ function findFoodArray(scan) {
         let check = dairy[w];
         var checker = scanner.localeCompare(check);
         if (checker == 0 ){
-        console.log(check, scanner, checker) 
-         console.log("dairy") ;
+        //console.log(check, scanner, checker) 
+         //console.log("dairy") ;
          present[4] = true;
       }
       }
@@ -100,7 +100,7 @@ function findFoodArray(scan) {
       }
       console.log("present-array ==>", presentArray);
       console.log("missing-array ==>", missingArray);
-      return [missingArray];
+      return (missingArray);
       
     }
     export default findFoodArray;

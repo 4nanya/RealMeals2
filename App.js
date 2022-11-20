@@ -8,6 +8,7 @@ import callGoogleVisionAsync from "./googleCloudVisionHelper";
 import findFood from "./FindFood";
 import logo from "./assets/truefoodButton.png"
 import Recommendation from './FoodRecommendation';
+import findFoodArray from './FindFoodArray';
 
 
 export default function App() {
@@ -19,6 +20,14 @@ export default function App() {
   //const [photoduplicate, setPhotoduplicate] = useState();
   //const [text, setText] = useState("Please add an image");
   const [scannedvalues, setScannedvalues] = useState("Please add an image");
+
+  const Vegetables = new Array("Brocolli","Brussel Sprouts","Artichokes","Eggplant","Mushrooms","Potatoes","Carrots","Corn","Cauliflower","Asparagus","Avocado","Green Beans","Zuchinni","Sweet Potato");
+  const Fruits = new Array("Apple","Banana","Cucumber","Dates","Elderberry","Figs","Grapes","Honeydew","Jackfruit","Kiwi","Lychee","Mango","Nectarine","Orange","Pineapple","Rasberry","Strawberry","Tamarind");
+  const Grains = new Array("Bread","Rice","Quinoa","Oats","Cereal","Tortilla Chips","Pasta","Cornmeal","Cornbread","Bagel");
+  const Protein = new Array("Beef","Pork","Chicken","Lamb","Fish","Eggs","Nuts","Tofu","Lentils","Paneer","Beans","Edemame","Peanut Butter");
+  const Dairy = new Array("Milk","Yogurt","Cheese","Sour Cream","Milk Coffee","Ice Cream","Butter","Lassi");
+  const arrayArray = [Vegetables, Protein, Fruits, Grains, Dairy];
+
   useEffect(() => {
     (async () => {
       const cameraPermission = await Camera.requestCameraPermissionsAsync();
@@ -55,6 +64,12 @@ export default function App() {
 
   };
 
+  let reset = () => {
+    //shareAsync(photo.uri).then(() => {
+    setPhoto(undefined);
+    setShowrecommendation(false);
+  };
+
   if (photo) {
     console.log("====>Inside photo=true method");
     //Share the pic function
@@ -65,23 +80,81 @@ export default function App() {
     };
 
     let values = findFood(scannedvalues);
-    
+    //let valuesArray = findFoodArray(scannedvalues);
+    const valuesArray = findFoodArray(scannedvalues); 
     if (showRecommendation){
       console.log("====>Inside showrecommendation=true method");
-      const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+      //const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+      console.log("ARRAY OF VALUES: "+valuesArray);
+
 
       return (
         <SafeAreaView style={styles.container}>
-            {cars.map((item,index)=>{
+            {valuesArray.map((item,index)=>{
+              if (item=='Vegetables'){
                 return (
                     //console.log(item);
-                    <View style= {styles.textbox} key={index}>
-                        <Text style={styles.missingText} key='200'>2 mins</Text>
-                        <Text style={styles.missingText} key={index}>{item} {index}</Text>
-                        <Text style={styles.missingText} key='300'>{item}</Text>
+                      <View style= {styles.textbox} key={index}>     
+
+                          {/* <Text style={styles.missingText} key={index}>{item}</Text> */}
+                          {/* <Text style={styles.missingText} key={index}>{arrayArray[index][Math.floor(Math.random()*arrayArray[index].length)]}</Text> */}
+                          <Text style={styles.missingText} key={index}>{item} {"\n"} {Vegetables[Math.floor(Math.random()*Vegetables.length)]}</Text>
+                          
+                      </View>
+                    );
+            }
+            if (item=='Protein'){
+              return (
+                  //console.log(item);
+                    <View style= {styles.textbox} key={index}>     
+
+                        {/* <Text style={styles.missingText} key={index}>{item}</Text> */}
+                        {/* <Text style={styles.missingText} key={index}>{arrayArray[index][Math.floor(Math.random()*arrayArray[index].length)]}</Text> */}
+                        <Text style={styles.missingText} key={index}>{item} {"\n"} {Protein[Math.floor(Math.random()*Protein.length)]}</Text>
+                        
                     </View>
+                  );
+          }
+          if (item=='Fruit'){
+            return (
+                //console.log(item);
+                  <View style= {styles.textbox} key={index}>     
+
+                      {/* <Text style={styles.missingText} key={index}>{item}</Text> */}
+                      {/* <Text style={styles.missingText} key={index}>{arrayArray[index][Math.floor(Math.random()*arrayArray[index].length)]}</Text> */}
+                      <Text style={styles.missingText} key={index}>{item} {"\n"} {Fruits[Math.floor(Math.random()*Fruits.length)]}</Text>
+                      
+                  </View>
+                );
+        }
+        if (item=='Grains'){
+          return (
+              //console.log(item);
+                <View style= {styles.textbox} key={index}>     
+
+                    {/* <Text style={styles.missingText} key={index}>{item}</Text> */}
+                    {/* <Text style={styles.missingText} key={index}>{arrayArray[index][Math.floor(Math.random()*arrayArray[index].length)]}</Text> */}
+                    <Text style={styles.missingText} key={index}>{item} {"\n"} {Grains[Math.floor(Math.random()*Grains.length)]}</Text>
+                    
+                </View>
+              );
+      }
+      if (item=='Dairy'){
+        return (
+            //console.log(item);
+              <View style= {styles.textbox} key={index}>     
+
+                  {/* <Text style={styles.missingText} key={index}>{item}</Text> */}
+                  {/* <Text style={styles.missingText} key={index}>{arrayArray[index][Math.floor(Math.random()*arrayArray[index].length)]}</Text> */}
+                  <Text style={styles.missingText} key={index}>{item} {"\n"} {Dairy[Math.floor(Math.random()*Dairy.length)]}</Text>
+                  
+              </View>
             );
-            })}
+    }
+})}
+          <View style= {styles.textbox}>
+          <Button style = {styles.sharebutton} title="Go Back" onPress={() => setShowrecommendation(false)} />
+          </View>
           </SafeAreaView>
       );
     }
@@ -93,12 +166,11 @@ export default function App() {
           <Text style={styles.presentText}>{values[0]} </Text>
           <Text style={styles.missingText}>{values[1]}</Text>
           </View>
-          {/* //<Text>{text}</Text> */}
           <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
           <View style= {styles.textbox}>
           <Button style = {styles.sharebutton} title="Share" onPress={sharePic} />
           <Button style = {styles.sharebutton} title="Recommendations" onPress={() => setShowrecommendation(true)} />
-          <Button tyle = {styles.sharebutton} title="Start Again" onPress={() => setPhoto(undefined)} />
+          <Button style = {styles.sharebutton} title="Start Again" onPress={() => reset()} />
           </View>
         </SafeAreaView>
       );
@@ -133,10 +205,13 @@ const styles = StyleSheet.create({
   },
   textbox: {
     borderWidth: 3,
-    borderRadius: 20,
+    borderRadius: 10,
     width: 400,
     backgroundColor:"white",
-    borderColor: '#336600'
+    borderColor: '#336600',
+    margin:10,
+    paddingBottom:60,
+
     
   },
   buttonContainer: {
