@@ -1,5 +1,6 @@
 function findFood(scan) {
 
+console.log("ENTERING findFood.js");
 //const scan = new Array("Naan", "Cereal", "Kale", "Meat") ; // what the image has from google api
 console.log("scan -->", scan);
 
@@ -26,12 +27,12 @@ const words = new Array("Vegetable", "Protein", "Fruit", "Grain", "Dairy") ;
 // nested for loop that goes through the scanned list and checks those against our local database
 for (let i = 0; i < scanLen; i++) {
   let scanner = scan[i]; //take individual index from scan area
-  console.log(scanLen, scanner) ;
+  //console.log(scanLen, scanner) ;
   for (let w = 0; w < vegLen; w++) {
     let check = veg[w];
     var checker = scanner.localeCompare(check); //check if the one in the local list is equal to the list gotten from Google API
     if (checker == 0 ){
-     console.log("vegtable") ;
+     //console.log("vegtable") ;
      present[0] = true; //if the food group is present, replace that group's space with true
     
   }
@@ -39,7 +40,7 @@ for (let i = 0; i < scanLen; i++) {
     let check = protein[w];
     var checker = scanner.localeCompare(check);
     if (checker == 0 ){
-     console.log("protein") ;
+     //console.log("protein") ;
      present[1] = true;
   }
   }
@@ -47,7 +48,7 @@ for (let i = 0; i < scanLen; i++) {
     let check = fruit[w];
     var checker = scanner.localeCompare(check);
     if (checker == 0 ){
-     console.log("fruit") ;
+     //console.log("fruit") ;
      present[2] = true; 
   }
   }
@@ -55,7 +56,7 @@ for (let i = 0; i < scanLen; i++) {
     let check = grain[w];
     var checker = scanner.localeCompare(check);
     if (checker == 0 ){
-     console.log("grain") ;
+     //console.log("grain") ;
      present[3] = true;
   }
   }
@@ -63,7 +64,7 @@ for (let i = 0; i < scanLen; i++) {
     let check = dairy[w];
     var checker = scanner.localeCompare(check);
     if (checker == 0 ){
-    console.log(check, scanner, checker) 
+    //console.log(check, scanner, checker) 
      console.log("dairy") ;
      present[4] = true;
   }

@@ -7,15 +7,17 @@ import callGoogleVisionAsync from "./googleCloudVisionHelper";
 //import MissingComponent from "./foodanalysis"
 import findFood from "./FindFood";
 import logo from "./assets/truefoodButton.png"
+import Recommendation from './FoodRecommendation';
 
 
 export default function App() {
+  console.log("ENTERING App.js");
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
   const [photo, setPhoto] = useState();
-  //const [goog, setGoog] = useState();
-  const [photoduplicate, setPhotoduplicate] = useState();
-  const [text, setText] = useState("Please add an image");
+  const [showRecommendation, setShowrecommendation] = useState();
+  //const [photoduplicate, setPhotoduplicate] = useState();
+  //const [text, setText] = useState("Please add an image");
   const [scannedvalues, setScannedvalues] = useState("Please add an image");
   useEffect(() => {
     (async () => {
@@ -39,22 +41,22 @@ export default function App() {
 
     let newPhoto = await cameraRef.current.takePictureAsync(options);
     setPhoto(newPhoto);
-    setPhotoduplicate(newPhoto);
+    //setPhotoduplicate(newPhoto);
     console.log("picture taken");
     const responseData = await callGoogleVisionAsync(newPhoto.base64);
     //await setTimeout (5000);
     //setGoog(responseData);
-    console.log("responseData ==> " , responseData);
-    setText(responseData.toString());
+    console.log("Google responseData ==> " , responseData);
+    //setText(responseData.toString());
     setScannedvalues(responseData);
-    console.log("Called Google");
+    console.log("Response from Google Completed");
 
     //savePhoto();
 
   };
 
   if (photo) {
-
+    console.log("====>Inside photo=true method");
     //Share the pic function
     let sharePic = () => {
       shareAsync(photo.uri).then(() => {
@@ -64,23 +66,46 @@ export default function App() {
 
     let values = findFood(scannedvalues);
     
-    return (
-      
-      <SafeAreaView style={styles.container}>
-        <View style= {styles.textbox}>
-        <Text style={styles.presentText}>{values[0]} </Text>
-        <Text style={styles.missingText}>{values[1]}</Text>
-        </View>
-        {/* //<Text>{text}</Text> */}
-        <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
-        <View style= {styles.textbox}>
-        <Button style = {styles.sharebutton} title="Share" onPress={sharePic} />
-        <Button tyle = {styles.sharebutton} title="Start Again" onPress={() => setPhoto(undefined)} />
-        </View>
-      </SafeAreaView>
-    );
+    if (showRecommendation){
+      console.log("====>Inside showrecommendation=true method");
+      const cars = ["BMW", "Volvo", "Saab", "Ford", "Fiat", "Audi"];
+
+      return (
+        <SafeAreaView style={styles.container}>
+            {cars.map((item,index)=>{
+                return (
+                    //console.log(item);
+                    <View style= {styles.textbox} key='{index}'>
+                        <Text style={styles.missingText} key='200'>2 mins</Text>
+                        <Text style={styles.missingText} key='{index}'>{item} {index}</Text>
+                        <Text style={styles.missingText} key='300'>{item}</Text>
+                    </View>
+            );
+            })}
+          </SafeAreaView>
+      );
+    }
+    else {
+      return (
+        
+        <SafeAreaView style={styles.container}>
+          <View style= {styles.textbox}>
+          <Text style={styles.presentText}>{values[0]} </Text>
+          <Text style={styles.missingText}>{values[1]}</Text>
+          </View>
+          {/* //<Text>{text}</Text> */}
+          <Image style={styles.preview} source={{ uri: "data:image/jpg;base64," + photo.base64 }} />
+          <View style= {styles.textbox}>
+          <Button style = {styles.sharebutton} title="Share" onPress={sharePic} />
+          <Button style = {styles.sharebutton} title="Recommendations" onPress={() => setShowrecommendation(true)} />
+          <Button tyle = {styles.sharebutton} title="Start Again" onPress={() => setPhoto(undefined)} />
+          </View>
+        </SafeAreaView>
+      );
+    }
   }
 
+  console.log("Outside photo=true method");
 
 
   return (
