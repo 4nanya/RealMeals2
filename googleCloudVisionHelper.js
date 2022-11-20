@@ -1,6 +1,6 @@
 import { SafeAreaViewComponent } from "react-native";
 
-const API_KEY = "add-key";
+const API_KEY = "AIzaSyAtnUAJHbSXMHQBCH2laGc_taNEpcLG1oo";
 const API_URL = `https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`;
 
 function generateBody(image) {
@@ -32,11 +32,11 @@ async function callGoogleVisionAsync(image) {
     body: JSON.stringify(body),
   });
   const result = await response.json();
-  console.log(result);
-  console.log("First Results ==> ", result.responses[0].labelAnnotations[0].description);
+  //console.log(result);
+  //console.log("First Results ==> ", result.responses[0].labelAnnotations[0].description);
   scan = new Array() ; // what the image has from google api
   result.responses[0].labelAnnotations.forEach((label) => {
-    console.log(label);
+    //console.log(label);
     scan.push(label.description);
 });
 
