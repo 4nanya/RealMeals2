@@ -75,9 +75,9 @@ export default function App() {
             {cars.map((item,index)=>{
                 return (
                     //console.log(item);
-                    <View style= {styles.textbox} key='{index}'>
+                    <View style= {styles.textbox} key={index}>
                         <Text style={styles.missingText} key='200'>2 mins</Text>
-                        <Text style={styles.missingText} key='{index}'>{item} {index}</Text>
+                        <Text style={styles.missingText} key={index}>{item} {index}</Text>
                         <Text style={styles.missingText} key='300'>{item}</Text>
                     </View>
             );
